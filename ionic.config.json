@@ -1,0 +1,8 @@
+{
+  "name": "AppFlow POC - from template",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "2da538c9"
+}
