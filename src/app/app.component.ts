@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { App } from '@capacitor/app';
 import * as LiveUpdates from '@capacitor/live-updates';
 
@@ -8,8 +8,13 @@ import * as LiveUpdates from '@capacitor/live-updates';
   styleUrls: ['app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   constructor() {}
+
+
+  ngOnInit(): void {
+    this.initializeApp();
+  }
 
   async initializeApp() {
     // Register event to fire each time user resumes the app
