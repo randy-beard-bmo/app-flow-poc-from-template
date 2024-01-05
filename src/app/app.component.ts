@@ -11,7 +11,6 @@ import * as LiveUpdates from '@capacitor/live-updates';
 export class AppComponent implements OnInit {
   constructor() {}
 
-
   ngOnInit(): void {
     this.initializeApp();
   }
@@ -19,7 +18,24 @@ export class AppComponent implements OnInit {
   async initializeApp() {
     // Register event to fire each time user resumes the app
     App.addListener('resume', async () => {
-      if (localStorage['shouldReloadApp'] && localStorage['sessionActive'] === false) {
+      console.log(
+        'randy - local storage type',
+        typeof localStorage['shouldReloadApp'],
+        typeof localStorage['sessionActive'],
+        '\n',
+        localStorage['shouldReloadApp'] === 'true',
+        '\n',
+        localStorage['shouldReloadApp'] === 'false',
+        '\n',
+        localStorage['sessionActive'] === 'true',
+        '\n',
+        localStorage['sessionActive'] === 'false',
+
+      );
+      if (
+        localStorage['shouldReloadApp'] === 'true' &&
+        localStorage['sessionActive'] === 'false'
+      ) {
         await LiveUpdates.reload();
       } else {
         const result = await LiveUpdates.sync();
