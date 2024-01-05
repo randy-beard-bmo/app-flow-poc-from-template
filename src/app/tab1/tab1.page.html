@@ -23,4 +23,23 @@
       </div>
     </ion-card-content>
   </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title class="ion-text-center">
+        {{ sessionExists ? 'Session Active' : 'Session Expired'}}
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <div class="ion-text-center">
+        <app-countdown-timer
+          (timerCompleted)="expireSession()"
+          (timerStarted)="initializeSession()"
+          [clearTimerText]="'Maintain Session Active/Expired'"
+          [startTimerText]="'Start Session and Session Timeout'"
+        ></app-countdown-timer>
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
