@@ -18,14 +18,6 @@ export class AppComponent implements OnInit {
   async initializeApp() {
     // Register event to fire each time user resumes the app
     App.addListener('resume', async () => {
-      console.log(
-        'randy - local storage type',
-        '\nshouldReloadApp: ',
-        localStorage['shouldReloadApp'] === 'true',
-        '\nsessionActive: ',
-        localStorage['sessionActive'] === 'true',
-
-      );
       if (
         localStorage['shouldReloadApp'] === 'true' &&
         localStorage['sessionActive'] === 'false'
@@ -34,6 +26,8 @@ export class AppComponent implements OnInit {
         await LiveUpdates.reload();
       } else {
         const result = await LiveUpdates.sync();
+        // This is a workaround for a bug in the Live Updates plugin.
+        // The plugin should return true for activeApplicationPathChanged when an update was previously downloaded but not applied.
         localStorage['shouldReloadApp'] = result.activeApplicationPathChanged ? 'true' : localStorage['shouldReloadApp'];
       }
     });
