@@ -20,31 +20,26 @@ export class AppComponent implements OnInit {
     App.addListener('resume', async () => {
       console.log(
         'randy - local storage type',
-        typeof localStorage['shouldReloadApp'],
-        typeof localStorage['sessionActive'],
-        '\n',
+        '\nshouldReloadApp: ',
         localStorage['shouldReloadApp'] === 'true',
-        '\n',
-        localStorage['shouldReloadApp'] === 'false',
-        '\n',
+        '\nsessionActive: ',
         localStorage['sessionActive'] === 'true',
-        '\n',
-        localStorage['sessionActive'] === 'false',
 
       );
       if (
         localStorage['shouldReloadApp'] === 'true' &&
         localStorage['sessionActive'] === 'false'
       ) {
+        localStorage['shouldReloadApp'] = 'false';
         await LiveUpdates.reload();
       } else {
         const result = await LiveUpdates.sync();
-        localStorage['shouldReloadApp'] = result.activeApplicationPathChanged;
+        localStorage['shouldReloadApp'] = result.activeApplicationPathChanged ? 'true' : localStorage['shouldReloadApp'];
       }
     });
 
     // First sync on app load
     const result = await LiveUpdates.sync();
-    localStorage['shouldReloadApp'] = result.activeApplicationPathChanged;
+    localStorage['shouldReloadApp'] = result.activeApplicationPathChanged ? 'true' : 'false';
   }
 }
